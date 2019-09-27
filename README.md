@@ -1,9 +1,9 @@
-# Rubics-Cube-Simmulation-
+# Rubik's-Cube-Simulation-
 
 ----------------------------------------------------------------------------
 # SUMMARY:
 
-This is a 3x3x3 Rubik's Cube Simulator. All the rotations are supported like in real 3x3x3 rubics cube.
+This is a 3x3x3 Rubik's Cube Simulator. All the rotations are supported like in real 3x3x3 rubik's cube.
 You can also suffle and solve the cube at any state with just one hit of the key.
 
 -----------------------------------------------------------------------------
