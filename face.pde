@@ -48,7 +48,8 @@ class face
      
      fill(c);
      
-     noStroke();
+     stroke(1);
+     strokeWeight(0.01);
      
      rectMode(CENTER);
      
