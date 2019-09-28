@@ -63,7 +63,18 @@ class Box{
      
      for(face f: faces)
      {
-        f.show();
+        PVector temp = f.normal;
+        if(abs(temp.x) == 1 && temp.x == x)
+            f.show();
+        else if(abs(temp.y) == 1 && temp.y == y)
+            f.show();
+        else if(abs(temp.z) == 1 && temp.z == z)
+            f.show();
+        else
+        {
+            f.c = color(51);
+            f.show();
+        }
      }
      
      popMatrix();
