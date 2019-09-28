@@ -41,10 +41,10 @@ void setup()
         }
     }
     
-    m = new Move(0, 0, 0, 0);
+    m = new Move(0, 0, 0, 0, 0);
 }
 
-void turnX(int index, int dir)
+void turnXX(int index, int dir)
 {
     for(int i = 0; i < cube.length; i++)
     {
@@ -55,13 +55,44 @@ void turnX(int index, int dir)
             PMatrix2D matrix = new PMatrix2D();
             matrix.rotate(dir * HALF_PI);
             matrix.translate(qb.y, qb.z);
-            
-            turn = 'X';
-            m = new Move(qb.x, qb.y, qb.z, dir);
-            
+
             qb.update(qb.x, round(matrix.m02), round(matrix.m12));
             
             qb.turnFaceX(dir);
+        }
+    }
+}
+
+void turnX(int index, int dir)
+{
+    for(int i = 0; i < cube.length; i++)
+    {
+        Box qb = cube[i];
+        
+        if(qb.x == index)
+        {
+            turn = 'X';
+            m = new Move(qb.x, qb.y, qb.z, -dir, index);
+            m.start();
+        }
+    }
+}
+
+void turnYY(int index, int dir)
+{
+    for(int i = 0; i < cube.length; i++)
+    {
+        Box qb = cube[i];
+        
+        if(qb.y == index)
+        {
+            PMatrix2D matrix = new PMatrix2D();
+            matrix.rotate(dir * HALF_PI);
+            matrix.translate(qb.x, qb.z);
+            
+            qb.update(round(matrix.m02), qb.y, round(matrix.m12));
+            
+            qb.turnFaceY(dir);
         }
     }
 }
@@ -74,16 +105,28 @@ void turnY(int index, int dir)
         
         if(qb.y == index)
         {
+            turn = 'Y';
+            m = new Move(qb.x, qb.y, qb.z, dir, index);
+            m.start();
+        }
+    }
+}
+
+void turnZZ(int index, int dir)
+{
+    for(int i = 0; i < cube.length; i++)
+    {
+        Box qb = cube[i];
+        
+        if(qb.z == index)
+        {
             PMatrix2D matrix = new PMatrix2D();
             matrix.rotate(dir * HALF_PI);
-            matrix.translate(qb.x, qb.z);
+            matrix.translate(qb.x, qb.y);
             
-            turn = 'Y';
-            m = new Move(qb.x, qb.y, qb.z, dir);
+            qb.update(round(matrix.m02), round(matrix.m12), qb.z);
             
-            qb.update(round(matrix.m02), qb.y, round(matrix.m12));
-            
-            qb.turnFaceY(dir);
+            qb.turnFaceZ(dir);
         }
     }
 }
@@ -96,16 +139,9 @@ void turnZ(int index, int dir)
         
         if(qb.z == index)
         {
-            PMatrix2D matrix = new PMatrix2D();
-            matrix.rotate(dir * HALF_PI);
-            matrix.translate(qb.x, qb.y);
-            
             turn = 'Z';
-            m = new Move(qb.x, qb.y, qb.z, dir);
-            
-            qb.update(round(matrix.m02), round(matrix.m12), qb.z);
-            
-            qb.turnFaceZ(dir);
+            m = new Move(qb.x, qb.y, qb.z, -dir, index);
+            m.start();
         }
     }
 }
@@ -201,6 +237,8 @@ void solveCube()
 
 void keyPressed()
 {
+  if(m.finished)
+  {
     if(key == 's')
     {
         suffleCube();
@@ -213,6 +251,7 @@ void keyPressed()
     {
         applyMove(key);
     }
+  }
 }
 
 void draw()
@@ -253,18 +292,18 @@ void draw()
      fill(242, 85, 221);
      text("F, f, B, b, U, u, D, d", width-300, 260);
      text("R, r, L, l, X, x, Y, y", width-300, 290);
+     text("Z, z", width-300, 320);
      
     cam.endHUD();
     
     rotateX(-0.3);
     rotateY(0.4);
     
-    if(turn != '$')
-      m.update();
+    m.update();
       
     scale(50);
     
-    if(frameCount%5 == 0)
+    if(frameCount%15 == 0)
     {  
       if(counter < sequence.length())
       {
@@ -273,7 +312,7 @@ void draw()
       }
     }
     
-    if(frameCount%5 == 0)
+    if(frameCount%15 == 0)
     {
         if(solveCounter < temp.length())
         {
