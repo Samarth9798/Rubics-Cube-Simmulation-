@@ -3,8 +3,7 @@
 ----------------------------------------------------------------------------
 # SUMMARY:
 
-This is a 3x3x3 Rubik's Cube Simulator. All the rotations are supported like in real 3x3x3 rubik's cube.
-You can also suffle and solve the cube at any state with just one hit of the key.
+This is a desktop application of 3x3x3 Rubik's Cube where you can play, suffle and solve the cube with the help of keyboard and mouse.
 
 -----------------------------------------------------------------------------
 # INFORMATION:
